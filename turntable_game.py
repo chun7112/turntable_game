@@ -26,21 +26,42 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ===== ⭐ 圓盤 =====
+# ⭐ 圓盤位置（只保留一個）
+placeholder = st.empty()
+
+# ⭐ 產生換行文字
+foods_wrapped = []
+
+for food in foods:
+    if len(food) > 6:
+        new_food = food[:6] + "\n" + food[6:]
+    else:
+        new_food = food
+    foods_wrapped.append(new_food)
+
+# ===== ⭐ 預設顯示圓盤（關鍵🔥）=====
 if len(foods) > 0:
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(5, 5), facecolor='white')
 
     sizes = [1] * len(foods)
 
     ax.pie(
-        sizes,
-        labels=foods,
+    sizes,
+        labels=foods_wrapped,   # ⭐ 換這裡
         startangle=90,
-        counterclock=False,
-        textprops={'fontproperties': font_prop}  # ⭐ 中文關鍵
+        counterclock=True,
+        labeldistance=0.5,
+        rotatelabels=True,
+        textprops={
+            'fontproperties': font_prop,
+            'fontsize': 8
+        }
     )
-
-    st.pyplot(fig)
+    
+    ax.set_aspect('equal')
+    plt.tight_layout()
+    
+    placeholder.pyplot(fig)
 
 else:
     st.warning("⚠️ 沒有食物可以轉！")
@@ -72,12 +93,51 @@ if st.button("下次再吃它！"):
 
 # ===== 轉盤動畫 =====
 if st.button("開始通靈"):
-    placeholder = st.empty()
+    result = random.choice(foods)
+    index = foods.index(result)
 
-    for i in range(15):
-        spin = random.choice(foods)
-        placeholder.write(f"👉 {spin}")
-        time.sleep(0.1)
+    angle_per = 360 / len(foods)
 
-    final = random.choice(foods)
-    placeholder.write(f"今天吃...{final}!🎉")
+    # ⭐ 停在正中央
+    target_angle = 360 - (index * angle_per) - (angle_per / 2)
+
+    final_angle = 720 + target_angle
+
+    # ⭐ 新增：目前角度（起點）
+    current_angle = 0
+
+    # ⭐ 改成 while（減速關鍵🔥）
+    while current_angle < final_angle:
+
+        # ⭐ 剩餘距離
+        remaining = final_angle - current_angle
+
+        # ⭐ 決定速度（核心🔥）
+        if remaining > 360:
+            step = 20
+        elif remaining > 180:
+            step = 10
+        elif remaining > 60:
+            step = 5
+        else:
+            step = 1
+
+        # ⭐ 這行超重要（很多人會漏❗）
+        current_angle += step
+
+        fig, ax = plt.subplots()
+        sizes = [1] * len(foods)
+
+        ax.pie(
+            sizes,
+            labels=foods,
+            startangle=90 + current_angle,  # ⭐ 用 current_angle
+            counterclock=True,
+            labeldistance=0.5,
+            textprops={'fontproperties': font_prop}
+        )
+
+        placeholder.pyplot(fig)
+        time.sleep(0.03)
+
+    st.success(f"🎉 今天吃：{result}")
