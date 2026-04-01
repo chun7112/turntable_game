@@ -8,7 +8,7 @@ st.title("🎡 吃什麼轉盤")
 
 # ⭐ 載入中文字體（關鍵🔥）
 font_path = "NotoSansTC-Regular.ttf"
-fm.FontProperties(fname=font_path)
+font_prop = fm.FontProperties(fname=font_path)
 
 # ⭐ 初始化
 if "foods" not in st.session_state:
