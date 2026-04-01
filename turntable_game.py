@@ -2,12 +2,13 @@ import streamlit as st
 import random
 import time
 import matplotlib.pyplot as plt
-
-plt.rcParams['font.sans-serif'] = ['Microsoft JhengHei']  # ⭐ 微軟正黑體
-plt.rcParams['axes.unicode_minus'] = False
-
+import matplotlib.font_manager as fm
 
 st.title("🎡 吃什麼轉盤")
+
+# ⭐ 載入中文字體（關鍵🔥）
+font_path = "NotoSansTC-Regular.ttf"
+fm.FontProperties(fname=font_path)
 
 # ⭐ 初始化
 if "foods" not in st.session_state:
@@ -16,17 +17,16 @@ if "foods" not in st.session_state:
 # ⭐ 拿出來用
 foods = st.session_state.foods
 
-# ===== ⭐ 圓盤（先畫！很重要🔥）=====
-
-# ⭐ 標題
+# ===== ⭐ 標題 =====
 st.markdown("<h3 style='text-align: center;'>今天吃什麼？</h3>", unsafe_allow_html=True)
 
-# ⭐ 指針（朝下 + 貼近圓盤🔥）
+# ===== ⭐ 指針（朝下 + 貼近圓盤🔥）=====
 st.markdown(
-    "<div style='text-align: center; font-size:40px; margin-bottom:-20px;'>▼</div>",
+    "<div style='text-align: center; font-size:40px; margin-bottom:-25px;'>▼</div>",
     unsafe_allow_html=True
 )
 
+# ===== ⭐ 圓盤 =====
 if len(foods) > 0:
     fig, ax = plt.subplots()
 
@@ -36,13 +36,15 @@ if len(foods) > 0:
         sizes,
         labels=foods,
         startangle=90,
-        counterclock=False
+        counterclock=False,
+        textprops={'fontproperties': font_prop}  # ⭐ 中文關鍵
     )
 
     st.pyplot(fig)
 
 else:
     st.warning("⚠️ 沒有食物可以轉！")
+
 # ===== 顯示清單 =====
 st.write("今天可能想吃的有...")
 for i, food in enumerate(foods, start=1):
