@@ -105,18 +105,19 @@ if st.button("開始通靈"):
 
     # ⭐ 新增：目前角度（起點）
     current_angle = 0
-
+    count = 0
+    
     # ⭐ 改成 while（減速關鍵🔥）
-    while current_angle < final_angle:
+    while current_angle < final_angle and count < 200:
 
         # ⭐ 剩餘距離
         remaining = final_angle - current_angle
 
         # ⭐ 決定速度（核心🔥）
         if remaining > 360:
-            step = 20
+            step =30
         elif remaining > 180:
-            step = 10
+            step = 15
         elif remaining > 60:
             step = 5
         else:
@@ -124,6 +125,7 @@ if st.button("開始通靈"):
 
         # ⭐ 這行超重要（很多人會漏❗）
         current_angle += step
+        count += 1
 
         fig, ax = plt.subplots()
         sizes = [1] * len(foods)
@@ -138,6 +140,6 @@ if st.button("開始通靈"):
         )
 
         placeholder.pyplot(fig)
-        time.sleep(0.03)
+        time.sleep(0.01)
 
     st.success(f"🎉 今天吃：{result}")
