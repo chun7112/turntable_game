@@ -119,7 +119,7 @@ if st.button("開始通靈"):
         plt.tight_layout()
 
         placeholder.pyplot(fig, clear_figure=True)
-        time.sleep(0.2)  # ⭐ 這裡才有用
+        time.sleep(0.05)  # ⭐ 這裡才有用
 
     st.success(f"🎉 今天吃：{result}")
 
