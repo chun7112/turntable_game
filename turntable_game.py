@@ -97,49 +97,83 @@ if st.button("開始通靈"):
     index = foods.index(result)
 
     angle_per = 360 / len(foods)
-
-    # ⭐ 停在正中央
     target_angle = 360 - (index * angle_per) - (angle_per / 2)
 
     final_angle = 720 + target_angle
 
-    # ⭐ 新增：目前角度（起點）
-    current_angle = 0
-    count = 0
-    
-    # ⭐ 改成 while（減速關鍵🔥）
-    while current_angle < final_angle and count < 200:
+    # ⭐ 用 for（固定幀數）
+    steps = 60   # ⭐ 幀數（越大越順，但越慢）
 
-        # ⭐ 剩餘距離
-        remaining = final_angle - current_angle
+    for i in range(steps):
+        # ⭐ 線性插值（重點🔥）
+        current_angle = final_angle * (i / steps)
 
-        # ⭐ 決定速度（核心🔥）
-        if remaining > 360:
-            step =30
-        elif remaining > 180:
-            step = 15
-        elif remaining > 60:
-            step = 5
-        else:
-            step = 1
-
-        # ⭐ 這行超重要（很多人會漏❗）
-        current_angle += step
-        count += 1
-
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(5, 5))
         sizes = [1] * len(foods)
 
         ax.pie(
             sizes,
-            labels=foods,
-            startangle=90 + current_angle,  # ⭐ 用 current_angle
-            counterclock=True,
-            labeldistance=0.5,
-            textprops={'fontproperties': font_prop}
+            startangle=90 + current_angle,
+            counterclock=True
         )
 
+        ax.set_aspect('equal')
+        plt.tight_layout()
+
         placeholder.pyplot(fig)
-        time.sleep(0.01)
+
+        time.sleep(0.02)
 
     st.success(f"🎉 今天吃：{result}")
+
+# if st.button("開始通靈"):
+#     result = random.choice(foods)
+#     index = foods.index(result)
+
+#     angle_per = 360 / len(foods)
+
+#     # ⭐ 停在正中央
+#     target_angle = 360 - (index * angle_per) - (angle_per / 2)
+
+#     final_angle = 720 + target_angle
+
+#     # ⭐ 新增：目前角度（起點）
+#     current_angle = 0
+#     count = 0
+    
+#     # ⭐ 改成 while（減速關鍵🔥）
+#     while current_angle < final_angle and count < 200:
+
+#         # ⭐ 剩餘距離
+#         remaining = final_angle - current_angle
+
+#         # ⭐ 決定速度（核心🔥）
+#         if remaining > 360:
+#             step =30
+#         elif remaining > 180:
+#             step = 15
+#         elif remaining > 60:
+#             step = 5
+#         else:
+#             step = 1
+
+#         # ⭐ 這行超重要（很多人會漏❗）
+#         current_angle += step
+#         count += 1
+
+#         fig, ax = plt.subplots()
+#         sizes = [1] * len(foods)
+
+#         ax.pie(
+#             sizes,
+#             labels=foods,
+#             startangle=90 + current_angle,  # ⭐ 用 current_angle
+#             counterclock=True,
+#             labeldistance=0.5,
+#             textprops={'fontproperties': font_prop}
+#         )
+
+#         placeholder.pyplot(fig)
+#         time.sleep(0.01)
+
+#     st.success(f"🎉 今天吃：{result}")
