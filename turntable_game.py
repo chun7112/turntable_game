@@ -111,7 +111,8 @@ if st.button("開始通靈"):
             labels=foods_wrapped,
             startangle=90 + angle,
             counterclock=True,
-            labeldistance=0.5
+            labeldistance=0.5,
+            textprops={'fontproperties': font_prop}
         )
 
         ax.set_aspect('equal')
