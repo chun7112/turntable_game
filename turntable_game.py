@@ -98,20 +98,18 @@ if st.button("開始通靈"):
 
     angle_per = 360 / len(foods)
     target_angle = 360 - (index * angle_per) - (angle_per / 2)
-    final_angle = 720 + target_angle
 
-    steps = 40
+    # ⭐ 模擬幾個角度（關鍵🔥）
+    angles = [0, 90, 180, 270, 360, 540, 720 + target_angle]
 
-    for i in range(steps):
-        current_angle = final_angle * (i / steps)
-
+    for angle in angles:
         fig, ax = plt.subplots(figsize=(5, 5))
         sizes = [1] * len(foods)
 
         ax.pie(
             sizes,
-            labels=foods_wrapped,   # ⭐ 要用換行版
-            startangle=90 + current_angle,
+            labels=foods_wrapped,
+            startangle=90 + angle,
             counterclock=True,
             labeldistance=0.5
         )
@@ -119,7 +117,8 @@ if st.button("開始通靈"):
         ax.set_aspect('equal')
         plt.tight_layout()
 
-        placeholder.pyplot(fig, clear_figure=True)  # ⭐ 核心🔥
+        placeholder.pyplot(fig, clear_figure=True)
+        time.sleep(0.2)  # ⭐ 這裡才有用
 
     st.success(f"🎉 今天吃：{result}")
 
