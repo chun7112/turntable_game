@@ -101,16 +101,15 @@ if st.button("開始通靈"):
 
     final_angle = 1080 + target_angle  # ⭐ 轉3圈
 
-    # ⭐ 產生角度（用 for，比較穩🔥）
+    # ⭐ 關鍵：固定幀數（不能太多🔥）
+    steps = 12
+
     angles = []
-
-    for angle in range(0, int(final_angle), 20):  # ⭐ 先固定速度
-        angles.append(angle)
-
-    # ⭐ 後面再補「減速效果」
-    slow_part = list(range(int(final_angle * 0.8), int(final_angle), 5))
-
-    angles = angles[:int(len(angles)*0.8)] + slow_part
+    for i in range(steps):
+        # ⭐ 插值（讓它走到 final_angle）
+        progress = i / (steps - 1)
+        current_angle = final_angle * progress
+        angles.append(current_angle)
 
     # ===== 動畫 =====
     for angle in angles:
@@ -130,7 +129,7 @@ if st.button("開始通靈"):
         plt.tight_layout()
 
         placeholder.pyplot(fig, clear_figure=True)
-        time.sleep(0.05)
+        time.sleep(0.08)  # ⭐ 不能太小
 
     st.success(f"🎉 今天吃：{result}")
 
