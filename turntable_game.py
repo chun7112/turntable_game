@@ -91,10 +91,6 @@ if st.button("下次再吃它！"):
     else:
         st.error("⚠️ 請輸入數字！")
 
-if st.button("測試動畫"):
-    for i in range(10):
-        st.write(i)
-        time.sleep(0.5)
 # ===== 轉盤動畫 =====
 if st.button("開始通靈"):
     result = random.choice(foods)
@@ -102,14 +98,11 @@ if st.button("開始通靈"):
 
     angle_per = 360 / len(foods)
     target_angle = 360 - (index * angle_per) - (angle_per / 2)
-
     final_angle = 720 + target_angle
 
-    # ⭐ 用 for（固定幀數）
-    steps = 60   # ⭐ 幀數（越大越順，但越慢）
+    steps = 40
 
     for i in range(steps):
-        # ⭐ 線性插值（重點🔥）
         current_angle = final_angle * (i / steps)
 
         fig, ax = plt.subplots(figsize=(5, 5))
@@ -117,16 +110,16 @@ if st.button("開始通靈"):
 
         ax.pie(
             sizes,
+            labels=foods_wrapped,   # ⭐ 要用換行版
             startangle=90 + current_angle,
-            counterclock=True
+            counterclock=True,
+            labeldistance=0.5
         )
 
         ax.set_aspect('equal')
         plt.tight_layout()
 
-        placeholder.pyplot(fig)
-
-        time.sleep(0.02)
+        placeholder.pyplot(fig, clear_figure=True)  # ⭐ 核心🔥
 
     st.success(f"🎉 今天吃：{result}")
 
