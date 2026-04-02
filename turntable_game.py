@@ -100,7 +100,7 @@ if st.button("開始通靈"):
     target_angle = 360 - (index * angle_per) - (angle_per / 2)
 
     # ⭐ 模擬幾個角度（關鍵🔥）
-    angles = [0, 90, 180, 270, 360, 540, 720 + target_angle]
+    angles = [0, 180, 360, 540, 720 + target_angle]
 
     for angle in angles:
         fig, ax = plt.subplots(figsize=(5, 5))
@@ -119,7 +119,7 @@ if st.button("開始通靈"):
         plt.tight_layout()
 
         placeholder.pyplot(fig, clear_figure=True)
-        time.sleep(0.05)  # ⭐ 這裡才有用
+        time.sleep(0.1)  # ⭐ 這裡才有用
 
     st.success(f"🎉 今天吃：{result}")
 
