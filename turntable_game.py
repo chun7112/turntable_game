@@ -99,9 +99,24 @@ if st.button("開始通靈"):
     angle_per = 360 / len(foods)
     target_angle = 360 - (index * angle_per) - (angle_per / 2)
 
-    # ⭐ 模擬幾個角度（關鍵🔥）
-    angles = [0, 180, 360, 540, 720 + target_angle]
+    final_angle = 1080 + target_angle  # ⭐ 多轉3圈（更爽🔥）
 
+    current_angle = 0
+    angles = []
+
+    # ⭐ 產生「減速角度」
+    while current_angle < final_angle:
+        if current_angle < final_angle * 0.6:
+            step = 30   # ⭐ 前面快
+        elif current_angle < final_angle * 0.85:
+            step = 15   # ⭐ 中間
+        else:
+            step = 5    # ⭐ 最後慢
+
+        current_angle += step
+        angles.append(current_angle)
+
+    # ⭐ 動畫開始
     for angle in angles:
         fig, ax = plt.subplots(figsize=(5, 5))
         sizes = [1] * len(foods)
@@ -119,7 +134,7 @@ if st.button("開始通靈"):
         plt.tight_layout()
 
         placeholder.pyplot(fig, clear_figure=True)
-        time.sleep(0.1)  # ⭐ 這裡才有用
+        time.sleep(0.05)  # ⭐ 小一點會更順
 
     st.success(f"🎉 今天吃：{result}")
 
