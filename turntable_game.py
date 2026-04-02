@@ -91,6 +91,10 @@ if st.button("下次再吃它！"):
     else:
         st.error("⚠️ 請輸入數字！")
 
+if st.button("測試動畫"):
+    for i in range(10):
+        st.write(i)
+        time.sleep(0.5)
 # ===== 轉盤動畫 =====
 if st.button("開始通靈"):
     result = random.choice(foods)
